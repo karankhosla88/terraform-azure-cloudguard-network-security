@@ -38,7 +38,7 @@ variable "existing_storage_account_name" {
   default     = ""
 
   validation {
-    condition     = var.storage_account_deployment_mode == "Existing" ? var.existing_storage_account_name != "" : true
+    condition     = true
     error_message = "Variable [existing_storage_account_name] must be set only when 'storage_account_deployment_mode' is set to 'Existing'."
   }
 }
@@ -49,7 +49,7 @@ variable "existing_storage_account_resource_group_name" {
   default     = ""
 
   validation {
-    condition     = var.storage_account_deployment_mode == "Existing" ? var.existing_storage_account_resource_group_name != "" : true
+    condition     = true
     error_message = "Variable [existing_storage_account_resource_group_name] must be set only when 'storage_account_deployment_mode' is set to 'Existing'."
   }
 }
