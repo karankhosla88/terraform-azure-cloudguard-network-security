@@ -37,10 +37,6 @@ variable "existing_storage_account_name" {
   type        = string
   default     = ""
 
-  validation {
-    condition     = true
-    error_message = "Variable [existing_storage_account_name] must be set only when 'storage_account_deployment_mode' is set to 'Existing'."
-  }
 }
 
 variable "existing_storage_account_resource_group_name" {
@@ -48,10 +44,6 @@ variable "existing_storage_account_resource_group_name" {
   type        = string
   default     = ""
 
-  validation {
-    condition     = true
-    error_message = "Variable [existing_storage_account_resource_group_name] must be set only when 'storage_account_deployment_mode' is set to 'Existing'."
-  }
 }
 
 variable "add_storage_account_ip_rules" {
