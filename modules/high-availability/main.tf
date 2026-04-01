@@ -121,7 +121,7 @@ resource "azurerm_network_interface" "nic_vip" {
     primary                       = true
     subnet_id                     = module.vnet.subnets[0]
     private_ip_address_allocation = module.vnet.allocation_method
-    private_ip_address            = cidrhost(module.vnet.subnet_prefixes[0], 5)
+    private_ip_address            = cidrhost(module.vnet.subnet_prefixes[0], 50)
     public_ip_address_id          = azurerm_public_ip.public_ip.0.id
   }
 
@@ -130,7 +130,7 @@ resource "azurerm_network_interface" "nic_vip" {
     subnet_id                     = module.vnet.subnets[0]
     primary                       = false
     private_ip_address_allocation = module.vnet.allocation_method
-    private_ip_address            = cidrhost(module.vnet.subnet_prefixes[0], 7)
+    private_ip_address            = cidrhost(module.vnet.subnet_prefixes[0], 70)
     public_ip_address_id          = azurerm_public_ip.cluster_vip.id
   }
 
@@ -183,7 +183,7 @@ resource "azurerm_network_interface" "nic" {
     primary                       = true
     subnet_id                     = module.vnet.subnets[0]
     private_ip_address_allocation = module.vnet.allocation_method
-    private_ip_address            = cidrhost(module.vnet.subnet_prefixes[0], 6)
+    private_ip_address            = cidrhost(module.vnet.subnet_prefixes[0], 60)
     public_ip_address_id          = azurerm_public_ip.public_ip.1.id
   }
 
