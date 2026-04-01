@@ -183,7 +183,7 @@ resource "azurerm_network_interface" "nic" {
     primary                       = true
     subnet_id                     = module.vnet.subnets[0]
     private_ip_address_allocation = module.vnet.allocation_method
-    private_ip_address            = cidrhost(module.vnet.subnet_prefixes[0], 50)
+    private_ip_address            = cidrhost(module.vnet.subnet_prefixes[0], 60)
     public_ip_address_id          = azurerm_public_ip.public_ip.1.id
   }
 
@@ -223,7 +223,7 @@ resource "azurerm_network_interface" "nic1" {
     name                          = "ipconfig2"
     subnet_id                     = module.vnet.subnets[1]
     private_ip_address_allocation = module.vnet.allocation_method
-    private_ip_address            = cidrhost(module.vnet.subnet_prefixes[1], 60)
+    private_ip_address = cidrhost(module.vnet.subnet_prefixes[1], count.index == 0 ? 50 : 60)
   }
 
   tags = merge(lookup(var.tags, "network-interface", {}), lookup(var.tags, "all", {}))
