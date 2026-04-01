@@ -121,7 +121,7 @@ resource "azurerm_network_interface" "nic_vip" {
     primary                       = true
     subnet_id                     = module.vnet.subnets[0]
     private_ip_address_allocation = module.vnet.allocation_method
-    private_ip_address            = cidrhost(module.vnet.subnet_prefixes[0], 50)
+    private_ip_address            = cidrhost(module.vnet.subnet_prefixes[0], 5)
     public_ip_address_id          = azurerm_public_ip.public_ip.0.id
   }
 
@@ -130,7 +130,7 @@ resource "azurerm_network_interface" "nic_vip" {
     subnet_id                     = module.vnet.subnets[0]
     primary                       = false
     private_ip_address_allocation = module.vnet.allocation_method
-    private_ip_address            = cidrhost(module.vnet.subnet_prefixes[0], 70)
+    private_ip_address            = cidrhost(module.vnet.subnet_prefixes[0], 7)
     public_ip_address_id          = azurerm_public_ip.cluster_vip.id
   }
 
@@ -141,7 +141,7 @@ resource "azurerm_network_interface" "nic_vip" {
       subnet_id                     = module.vnet.subnets[0]
       primary                       = false
       private_ip_address_allocation = module.vnet.allocation_method
-      private_ip_address            = cidrhost(module.vnet.subnet_prefixes[0], 70 + index(var.vips_names, ip_configuration.value) + 1)
+      private_ip_address            = cidrhost(module.vnet.subnet_prefixes[0], 7 + index(var.vips_names, ip_configuration.value) + 1)
       public_ip_address_id          = azurerm_public_ip.vips[index(var.vips_names, ip_configuration.value)].id
     }
   }
@@ -183,7 +183,7 @@ resource "azurerm_network_interface" "nic" {
     primary                       = true
     subnet_id                     = module.vnet.subnets[0]
     private_ip_address_allocation = module.vnet.allocation_method
-    private_ip_address            = cidrhost(module.vnet.subnet_prefixes[0], 60)
+    private_ip_address            = cidrhost(module.vnet.subnet_prefixes[0], 6)
     public_ip_address_id          = azurerm_public_ip.public_ip.1.id
   }
 
@@ -223,7 +223,7 @@ resource "azurerm_network_interface" "nic1" {
     name                          = "ipconfig2"
     subnet_id                     = module.vnet.subnets[1]
     private_ip_address_allocation = module.vnet.allocation_method
-    private_ip_address = cidrhost(module.vnet.subnet_prefixes[1], count.index == 0 ? 50 : 60)
+    private_ip_address            = cidrhost(module.vnet.subnet_prefixes[1], count.index + 5)
   }
 
   tags = merge(lookup(var.tags, "network-interface", {}), lookup(var.tags, "all", {}))
@@ -281,7 +281,7 @@ resource "azurerm_lb" "backend_lb" {
     name                          = "backend-lb"
     subnet_id                     = module.vnet.subnets[1]
     private_ip_address_allocation = module.vnet.allocation_method
-    private_ip_address            = cidrhost(module.vnet.subnet_prefixes[1], 40)
+    private_ip_address            = cidrhost(module.vnet.subnet_prefixes[1], 4)
   }
 
   tags = merge(lookup(var.tags, "load-balancer", {}), lookup(var.tags, "all", {}))
@@ -515,7 +515,7 @@ resource "azurerm_virtual_machine" "vm_instance_availability_zone" {
       tenant_id                      = var.tenant_id
       virtual_network                = module.vnet.name
       cluster_name                   = var.cluster_name
-      external_private_addresses     = cidrhost(module.vnet.subnet_prefixes[0], 70)
+      external_private_addresses     = cidrhost(module.vnet.subnet_prefixes[0], 7)
       enable_custom_metrics          = var.enable_custom_metrics ? "yes" : "no"
       admin_shell                    = var.admin_shell
       smart_1_cloud_token            = count.index == 0 ? var.smart_1_cloud_token_a : var.smart_1_cloud_token_b
